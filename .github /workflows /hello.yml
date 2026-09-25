@@ -7,6 +7,7 @@ name: Hello
 on: 
 push:
   branches: [main]
+workflow_dispatch:
 
 # what the workflow does  
 jobs: 
