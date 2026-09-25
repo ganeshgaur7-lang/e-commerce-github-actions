@@ -1,0 +1,17 @@
+# My first GitHub Actions workflow
+
+name: Hello
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Say Hello
+        run: echo "Hello Doston"
