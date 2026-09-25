@@ -11,10 +11,11 @@ on:
 jobs:
   greet:
     runs-on: ubuntu-latest
-
     steps:
       - name: Say Hello
         run: echo "Hello Doston"
-
+  repo-name: 
+      runs-on: ubuntu-latest
+      steps:
       - name: Show Repository Name
         run: echo "Repository name is ${{ github.event.repository.name }}" 
