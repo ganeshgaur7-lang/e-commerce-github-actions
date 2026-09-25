@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopEase — Simple Ecommerce Store</title>
+  <style>
+    :root {
+      --primary: #111827;
+      --accent: #2563eb;
+      --muted: #6b7280;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --success: #16a34a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--primary);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .search {
+      flex: 1;
+      max-width: 500px;
+      position: relative;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 12px 18px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      outline: none;
+      font-size: 0.95rem;
+      background: #f9fafb;
+    }
+
+    .search input:focus { border-color: var(--accent); }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-btn {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      font-size: 1.25rem;
+      position: relative;
+    }
+
+    .badge {
+      position: absolute;
+      top: -8px;
+      right: -9px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      font-size: 0.7rem;
+      display: grid;
+      place-items: center;
+    }
+
+    .hero {
+      margin: 28px auto 44px;
+      min-height: 400px;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(90deg, rgba(15,23,42,.88), rgba(15,23,42,.25)),
+        url("https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=85&w=1600&auto=format&fit=crop")
+        center/cover;
+      color: white;
+    }
+
+    .hero-content {
+      max-width: 560px;
+      padding: 56px;
+    }
+
+    .eyebrow {
+      color: #bfdbfe;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 0.8rem;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 5vw, 4rem);
+      line-height: 1.05;
+      margin-bottom: 18px;
+      letter-spacing: -2px;
+    }
+
+    .hero p {
+      color: #e5e7eb;
+      margin-bottom: 26px;
+      font-size: 1.05rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s, opacity .2s;
+    }
+
+    .btn:hover { transform: translateY(-2px); opacity: .92; }
+
+    section { margin-bottom: 52px; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      gap: 20px;
+    }
+
+    .section-head h2 {
+      font-size: 1.7rem;
+      letter-spacing: -0.5px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .category {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: box-shadow .2s, transform .2s;
+    }
+
+    .category:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(15,23,42,.08);
+    }
+
+    .category-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #eff6ff;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+    }
+
+    .category strong { display: block; }
+    .category small { color: var(--muted); }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .product {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .product:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(15,23,42,.1);
+    }
+
+    .product-img {
+      width: 100%;
+      height: 245px;
+      object-fit: cover;
+      display: block;
+      background: #f3f4f6;
+    }
+
+    .product-body { padding: 17px; }
+
+    .tag {
+      color: var(--accent);
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .product h3 {
+      margin: 5px 0;
+      font-size: 1rem;
+    }
+
+    .rating {
+      color: #f59e0b;
+      font-size: .85rem;
+      margin: 7px 0;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+    }
+
+    .price {
+      font-weight: 800;
+      font-size: 1.15rem;
+    }
+
+    .old-price {
+      color: #9ca3af;
+      text-decoration: line-through;
+      font-size: .85rem;
+      margin-left: 5px;
+      font-weight: 400;
+    }
+
+    .add {
+      border: 0;
+      border-radius: 9px;
+      background: #eff6ff;
+      color: var(--accent);
+      padding: 9px 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .add:hover { background: var(--accent); color: white; }
+
+    .promo {
+      background: #111827;
+      color: white;
+      border-radius: 20px;
+      padding: 35px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .promo h2 { margin-bottom: 5px; }
+    .promo p { color: #cbd5e1; }
+
+    footer {
+      background: #fff;
+      border-top: 1px solid var(--border);
+      padding: 35px 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .products { grid-template-columns: repeat(2, 1fr); }
+      .categories { grid-template-columns: repeat(2, 1fr); }
+      .search { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-content { padding: 32px 25px; }
+      .hero { min-height: 360px; }
+      .products, .categories { grid-template-columns: 1fr; }
+      .promo, .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#">Shop<span>Ease</span></a>
+
+      <div class="search">
+        <input id="searchInput" type="search" placeholder="Search products...">
+      </div>
+
+      <div class="actions">
+        <button class="icon-btn" title="Account">👤</button>
+        <button class="icon-btn" title="Cart" onclick="showCart()">
+          🛒 <span class="badge" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">New season collection</div>
+        <h1>Style that fits your everyday.</h1>
+        <p>Discover simple, modern essentials for your wardrobe, home and lifestyle.</p>
+        <a class="btn" href="#products">Shop now →</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>Shop by category</h2>
+          <p>Find what you need, faster.</p>
+        </div>
+      </div>
+
+      <div class="categories">
+        <a class="category" href="#products">
+          <div class="category-icon">👕</div>
+          <div><strong>Fashion</strong><small>120+ products</small></div>
+        </a>
+        <a class="category" href="#products">
+          <div class="category-icon">🎧</div>
+          <div><strong>Electronics</strong><small>80+ products</small></div>
+        </a>
+        <a class="category" href="#products">
+          <div class="category-icon">🏠</div>
+          <div><strong>Home</strong><small>95+ products</small></div>
+        </a>
+        <a class="category" href="#products">
+          <div class="category-icon">⌚</div>
+          <div><strong>Accessories</strong><small>60+ products</small></div>
+        </a>
+      </div>
+    </section>
+
+    <section id="products">
+      <div class="section-head">
+        <div>
+          <h2>Popular products</h2>
+          <p>Hand-picked items for you.</p>
+        </div>
+        <p id="resultCount">8 products</p>
+      </div>
+
+      <div class="products" id="productGrid">
+        <article class="product" data-name="Minimal White Sneakers">
+          <img class="product-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=85&w=800&auto=format&fit=crop" alt="White sneakers">
+          <div class="product-body">
+            <span class="tag">Footwear</span>
+            <h3>Minimal White Sneakers</h3>
+            <div class="rating">★★★★★ <span style="color:#6b7280">(128)</span></div>
+            <div class="price-row">
+              <div class="price">₹2,499 <span class="old-price">₹3,499</span></div>
+              <button class="add" onclick="addToCart('Minimal White Sneakers')">Add</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product" data-name="Classic Wrist Watch">
+          <img class="product-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=85&w=800&auto=format&fit=crop" alt="Classic wrist watch">
+          <div class="product-body">
+            <span class="tag">Accessories</span>
+            <h3>Classic Wrist Watch</h3>
+            <div class="rating">★★★★★ <span style="color:#6b7280">(94)</span></div>
+            <div class="price-row">
+              <div class="price">₹3,299 <span class="old-price">₹4,199</span></div>
+              <button class="add" onclick="addToCart('Classic Wrist Watch')">Add</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product" data-name="Premium Headphones">
+          <img class="product-img" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=85&w=800&auto=format&fit=crop" alt="Wireless headphones">
+          <div class="product-body">
+            <span class="tag">Electronics</span>
+            <h3>Premium Headphones</h3>
+            <div class="rating">★★★★☆ <span style="color:#6b7280">(76)</span></div>
+            <div class="price-row">
+              <div class="price">₹4,999 <span class="old-price">₹6,499</span></div>
+              <button class="add" onclick="addToCart('Premium Headphones')">Add</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product" data-name="Modern Backpack">
+          <img class="product-img" src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=85&w=800&auto=format&fit=crop" alt="Modern backpack">
+          <div class="product-body">
+            <span class="tag">Bags</span>
+            <h3>Modern Backpack</h3>
+            <div class="rating">★★★★★ <span style="color:#6b7280">(63)</span></div>
+            <div class="price-row">
+              <div class="price">₹1,899 <span class="old-price">₹2,499</span></div>
+              <button class="add" onclick="addToCart('Modern Backpack')">Add</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product" data-name="Cotton Casual Shirt">
+          <img class="product-img" src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?q=85&w=800&auto=format&fit=crop" alt="Casual shirt">
+          <div class="product-body">
+            <span class="tag">Fashion</span>
+            <h3>Cotton Casual Shirt</h3>
+            <div class="rating">★★★★☆ <span style="color:#6b7280">(51)</span></div>
+            <div class="price-row">
+              <div class="price">₹1,299 <span class="old-price">₹1,799</span></div>
+              <button class="add" onclick="addToCart('Cotton Casual Shirt')">Add</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product" data-name="Ceramic Coffee Set">
+          <img class="product-img" src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=85&w=800&auto=format&fit=crop" alt="Ceramic coffee set">
+          <div class="product-body">
+            <span class="tag">Home</span>
+            <h3>Ceramic Coffee Set</h3>
+            <div class="rating">★★★★★ <span style="color:#6b7280">(43)</span></div>
+            <div class="price-row">
+              <div class="price">₹999 <span class="old-price">₹1,299</span></div>
+              <button class="add" onclick="addToCart('Ceramic Coffee Set')">Add</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product" data-name="Modern Sunglasses">
+          <img class="product-img" src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=85&w=800&auto=format&fit=crop" alt="Sunglasses">
+          <div class="product-body">
+            <span class="tag">Accessories</span>
+            <h3>Modern Sunglasses</h3>
+            <div class="rating">★★★★☆ <span style="color:#6b7280">(38)</span></div>
+            <div class="price-row">
+              <div class="price">₹1,599 <span class="old-price">₹2,199</span></div>
+              <button class="add" onclick="addToCart('Modern Sunglasses')">Add</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="promo">
+      <div>
+        <h2>Free shipping on orders over ₹999</h2>
+        <p>Fast delivery and easy returns on every order.</p>
+      </div>
+      <a class="btn" href="#products">Explore products</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 ShopEase. All rights reserved.</div>
+      <div>Secure checkout · Easy returns · Customer support</div>
+    </div>
+  </footer>
+
+  <script>
+    let cartCount = 0;
+
+    function addToCart(product) {
+      cartCount++;
+      document.getElementById("cartCount").textContent = cartCount;
+      alert(product + " added to cart!");
+    }
+
+    function showCart() {
+      alert(cartCount ? `You have ${cartCount} item(s) in your cart.` : "Your cart is empty.");
+    }
+
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const query = this.value.toLowerCase().trim();
+      const products = document.querySelectorAll(".product");
+      let visible = 0;
+
+      products.forEach(product => {
+        const name = product.dataset.name.toLowerCase();
+        const match = name.includes(query);
+        product.style.display = match ? "" : "none";
+        if (match) visible++;
+      });
+
+      document.getElementById("resultCount").textContent =
+        `${visible} product${visible === 1 ? "" : "s"}`;
+    });
+  </script>
+</body>
+</html>
