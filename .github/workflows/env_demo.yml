@@ -1,6 +1,10 @@
 name: Show envoirnment variable
 
 on: 
+ push:
+    paths-ignore:
+      - "README.md"
+      - "docs/**"
  workflow_dispatch:
   inputs:
     environment:
