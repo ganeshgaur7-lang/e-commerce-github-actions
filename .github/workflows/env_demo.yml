@@ -1,0 +1,13 @@
+name: Show envoirnment variable
+
+on: 
+ workflow_dispatch:
+env:
+  Name: Ganesh
+  
+jobs:
+  show_env:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Show plain text env
+       run: echo "my name is $Name"
