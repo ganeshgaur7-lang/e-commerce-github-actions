@@ -12,4 +12,4 @@ jobs:
      - name: Show plain text env
        run: echo "my name is $Name"
      - name: show my secrets
-       run: echo "my secret is ${{secrets.Ganesh_secret}}"
+       run: echo "my secret is ${{ secrets.Ganesh_secret }}"
