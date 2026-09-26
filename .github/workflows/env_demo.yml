@@ -14,4 +14,4 @@ jobs:
      - name: show my secrets
        run: echo "my secret is ${{ secrets.GANESH_SECRETS }}"
      - name: show variable
-       run: echo "my github account name is ${{ vars.Ganesh_Github_account }}
+       run: echo "my github account name is ${{ vars.Ganesh_Github_account }}"
