@@ -2,8 +2,11 @@
 
 name: CICD demo
 
-on: 
- push:
+on:
+  push:
+    paths-ignore:
+      - "README.md"
+      - "docs/**"
 
 jobs:
 # CI -continous integration
