@@ -2,6 +2,15 @@ name: Show envoirnment variable
 
 on: 
  workflow_dispatch:
+  inputs:
+    environment:
+     description: "Choose deployment environment"
+     required: true
+     type: choice
+     options:
+       - dev
+       - stg
+       - prd
 env:
   Name: Ganesh
   
