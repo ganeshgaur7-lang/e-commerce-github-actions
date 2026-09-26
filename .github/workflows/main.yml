@@ -4,7 +4,10 @@ name: Hello
 
 on:
   push:
-    branches:
+   paths-ignore:
+      - "README.md"
+      - "docs/**"
+   branches:
       - main
   workflow_dispatch:
 
