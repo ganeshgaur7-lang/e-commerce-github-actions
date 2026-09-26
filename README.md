@@ -1,4 +1,4 @@
-******# E-Commerce GitHub Actions Practice******
+# E-Commerce GitHub Actions Practice
 
 This repository contains a simple e-commerce website that I am using to
 learn and practice **Git, GitHub, GitHub Actions, and CI/CD concepts**.
