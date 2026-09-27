@@ -1,0 +1,37 @@
+name: CICD dummy
+
+on:
+ push:
+   branches:
+     - main
+ workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: show files
+        run: ls -l
+      - name: build application
+        run: echo "application built"
+
+  Test:
+    needs: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: run test
+        run: echo "tested successfully"
+
+  Deploy:
+    needs: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: deploy application
+        run: echo "Application deployed in production"
+    
+    
